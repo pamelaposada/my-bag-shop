@@ -16,13 +16,14 @@
   --main-color: #23242a;
   --background-color: #0e0e1a;
   --hover-item-color: #3f4141;
-  --hover-cart-color: #b5b8b8;
+  --hover-cart-color: #d6dada;
   --cart-item-color: #828584;
   /* Graphic colors */
   --orange: #eb8015;
   --orange_2:#a4580b;
   --pink: #ff3448;
   --lightblue: #277d73;
+  --turquoise: #4f8e86;
   --blue: #3f27da;
 
   /* Logo and warnings */
@@ -71,11 +72,12 @@ body{
   cursor: pointer;
 }
 .cart-box img{
-  width: 25px;
+  width: 20px;
 }
 .cart-box p{
   position: relative;
-  top: -6px;
+  top: -4px;
+  font-size: 0.8rem;
 }
 
 .title-products{
@@ -244,30 +246,35 @@ body{
   width: 100%;
 
 }
+/* Cart container */
 .cart-items-container{
   width: 480px;
-  /* height: 400px; */
   background-color: var(--hover-cart-color);
   position: absolute;
   border-radius: 10px;
   right: 0;
-  top: 15%;
+  top: 19%;
   z-index: 499;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  padding: 90px 20px 150px 20px;
+  padding: 50px 20px 30px 20px;
+}
+.cart-items-container h4{
+  color: var(--orange);
+  padding: 20px 0;
 }
 .cart-items-container p{
   color: var(--orange_2);
+  font-size: 1.5rem;
 }
 
 /* Cart Item */
 .item-cart{
   width: 100%;
   height: 60px;
-  background-color: var(--text-secondary);
+  background-color: var(--turquoise);
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
@@ -275,33 +282,49 @@ body{
   margin-bottom: 5px;
 }
 .item-cart p{
-  color: var(--hover-item-color);
+  color: var(--text);
   margin-top: 10px;
+  font-size: 0.9rem;
+}
+.item-cart .item-price-cart{
+  font-weight: 700;
+ 
 }
 .cart-image-container{
   width: 50px;
   height: 100%;
-  background-color: var(--cart-item-color);
+  background-color: var(--text);
   padding: 3px;
 }
 .cart-image-container img{
   width: 100%;
 }
 .remove-btn{
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--red);
   border: none;
   cursor: pointer;
+  margin-top: 10px;
 }
 .remove-btn img{
   width: 100%;
 }
-
 .empty-cart{
   width: 100%;
   height: 100%;
   background: #020202;
   z-index: 600;
+}
+.checkout-btn{
+  width: 300px;
+}
+.checkout-btn p{
+  color: var(--text);
+  font-size: 1rem;
+  padding-top: 10px;
+}
+.total-value-color{
+  color: var(--lightblue);
 }

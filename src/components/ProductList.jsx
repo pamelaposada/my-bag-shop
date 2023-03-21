@@ -11,11 +11,9 @@ function ProductList(){
   const [data, setData] = useState(list);
   const [inputContent, setInputContent] = useState('');
   const [cartStyle, setCartStyle] = useState({display: 'none'});
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([]);
 
-  
 
-  
   const handleBtns = (e) => {
     if(e.target.value === "All products"){
       setCopydata(list)
@@ -86,17 +84,27 @@ function ProductList(){
     setCart(newCart);
   }
 
+  // Remove from Products list
   const removeFromCartClick = (name) => {
     const newCart = cart.filter(item => item !== name);
     setCart(newCart);
   }
 
+  // Remove from Cart
+  const removeFromCartBox = (itemToRemove) => {
+    const newCart = cart.filter(item => item !== itemToRemove);
+    setCart(newCart)
+  }
 
   useEffect(()=> {
     console.log(cart)
   },[cart])
 
   const selectedItems = data.filter(item => cart.includes(item.name))
+  const displayCheckOut = selectedItems.length !== 0
+    ?<CheckOut cartLng={selectedItems}/> 
+    : <h4>Your cart is empty</h4>
+
 //   console.log(selectedItems)
 
     return(
@@ -108,15 +116,16 @@ function ProductList(){
                     <img 
                     src={Cart} 
                     alt="cart"/>
-                    <p>{cart.length}</p>
-                    
+                    <p>{cart.length}</p>             
                 </div>
+
+                {/* Hover */}
                 <div className='main-cart-items' 
                 style={cartStyle} 
                 onMouseLeave={hideCartItems}
                 >
                     <div className="cart-items-container">
-                        
+                       
                         {selectedItems.map((item, i) => (
                             <div key={i}>
                                 <CartItem 
@@ -124,13 +133,13 @@ function ProductList(){
                                 name={item.name}
                                 price={item.price}
                                 passSelected={selectedItems}
+                                onRemoveFromCartBox={removeFromCartBox}
                                 />
                             </div>
                         ))}
-                        
+                       {displayCheckOut} 
                     </div>        
                 </div>
-                
             </div>
             <div className='heading'></div>
             <h2 className='title-products'>Available Products</h2>
@@ -181,3 +190,21 @@ function ProductList(){
 }
 
 export default ProductList
+
+function CheckOut(props){
+
+  // console.log(props.cartLng)
+
+  const totalValues = props.cartLng.map((item,i) => item.price).reduce((pre,curr,i) => pre + curr + 0)
+
+  // console.log(totalValues)
+
+  return(
+    <div>
+      <h4>Total: <span className='total-value-color'>${totalValues}</span></h4>
+      <button className='cart-btn checkout-btn'>
+        <p>{`Proceed to check out (${props.cartLng.length} items)`}</p>
+      </button>
+    </div> 
+  )
+}

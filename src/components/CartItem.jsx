@@ -2,11 +2,8 @@ import Remove from '../img/remove.png'
 
 function CartItem(props){
     
-    // if(!props){
-    //     return <EmptyCart/>
-    // }
-    // console.log(props)
-    // console.log(props.passSelected)
+    console.log(props)
+    console.log(props.passSelected)
 
     return(
         <div className="item-cart">
@@ -15,8 +12,13 @@ function CartItem(props){
             </div>
             
             <p>{props.name}</p>
-            <p>{props.price}</p>
-            <button className='remove-btn'>
+            <p className='item-price-cart'>{props.price}</p>
+            <button className='remove-btn'
+            onClick={(e) => {
+                e.stopPropagation()
+                props.onRemoveFromCartBox(props.name)
+            }}
+            >
                 <img src={Remove} alt="remove" />
             </button>
         </div>
