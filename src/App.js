@@ -1,12 +1,21 @@
 import ProductList from './components/ProductList';
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import NotFound from './components/NotFound';
 
 import './App.css';
+import SubmitPurchase from './components/SubmitPurchase';
 
 function App() {
   return (
-    <div className="App">
-      <ProductList/>
-    </div>
+
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ProductList/>}/>
+        <Route path="checkout" element={<SubmitPurchase/>}/>
+        <Route path="*" element={<NotFound/>}/>
+      </Routes>
+    </BrowserRouter>
+  
   );
 }
 

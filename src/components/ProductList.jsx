@@ -3,6 +3,7 @@ import ListOfProducts from '../data/ListOfProducts'
 import Product from './Product';
 import Cart from '../img/cart.png';
 import CartItem from './CartItem'
+import { Link, Params } from 'react-router-dom';
 
 
 function ProductList(){
@@ -105,41 +106,40 @@ function ProductList(){
     ?<CheckOut cartLng={selectedItems}/> 
     : <h4>Your cart is empty</h4>
 
-//   console.log(selectedItems)
 
     return(
-        <div>
+          <div>
             <div>
-            <h1 className='title'>My Bag Shop</h1>
-            <div className='main-cart-box'>
-                <div className='cart-box' onMouseEnter={displayCartItems} >
-                    <img 
-                    src={Cart} 
-                    alt="cart"/>
-                    <p>{cart.length}</p>             
-                </div>
+              <h1 className='title'>My Bag Shop</h1>
+              <div className='main-cart-box'>
+                  <div className='cart-box' onMouseEnter={displayCartItems} >
+                      <img 
+                      src={Cart} 
+                      alt="cart"/>
+                      <p>{cart.length}</p>             
+                  </div>
 
-                {/* Hover */}
-                <div className='main-cart-items' 
-                style={cartStyle} 
-                onMouseLeave={hideCartItems}
-                >
-                    <div className="cart-items-container">
-                       
-                        {selectedItems.map((item, i) => (
-                            <div key={i}>
-                                <CartItem 
-                                url={item.url}
-                                name={item.name}
-                                price={item.price}
-                                passSelected={selectedItems}
-                                onRemoveFromCartBox={removeFromCartBox}
-                                />
-                            </div>
-                        ))}
-                       {displayCheckOut} 
-                    </div>        
-                </div>
+                  {/* Hover */}
+                  <div className='main-cart-items' 
+                  style={cartStyle} 
+                  onMouseLeave={hideCartItems}
+                  >
+                      <div className="cart-items-container">
+                          
+                          {selectedItems.map((item, i) => (
+                              <div key={i}>
+                                  <CartItem 
+                                  url={item.url}
+                                  name={item.name}
+                                  price={item.price}
+                                  passSelected={selectedItems}
+                                  onRemoveFromCartBox={removeFromCartBox}
+                                  />
+                              </div>
+                          ))}
+                          {displayCheckOut} 
+                      </div>        
+                  </div>
             </div>
             <div className='heading'></div>
             <h2 className='title-products'>Available Products</h2>
@@ -166,7 +166,7 @@ function ProductList(){
                 </div>
                 </div>
             </div>
-            </div>
+          </div>
         <div className='box'>
             {copydata.map((item, i)=> 
             (
@@ -195,15 +195,19 @@ function CheckOut(props){
 
   // console.log(props.cartLng)
 
+  // const purchase = props.cartLng
+
   const totalValues = props.cartLng.map((item,i) => item.price).reduce((pre,curr,i) => pre + curr + 0)
 
   // console.log(totalValues)
 
   return(
     <div>
-      <h4>Total: <span className='total-value-color'>${totalValues}</span></h4>
+      <h4>Total: <span className='total-value-color'>${(totalValues).toFixed(2)}</span></h4>
       <button className='cart-btn checkout-btn'>
+        <Link to={`/checkout`} className="ckeckout-link" state={{fromCheckOut: props.cartLng}}>
         <p>{`Proceed to check out (${props.cartLng.length} items)`}</p>
+        </Link>
       </button>
     </div> 
   )
