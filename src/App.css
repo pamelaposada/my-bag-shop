@@ -50,6 +50,26 @@ body{
   padding: 20px 0;
   color: var(--orange);
 }
+.sign-up-bt{
+  background: var(--orange);
+  border: none;
+  padding: 20px 30px;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1rem;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+.sign-up-bt:hover{
+  background: var(--lightblue);
+}
+.sign-up-bt .sg-link{
+  color: var(--text);
+  text-decoration: none;
+}
 .heading{
   width: 100%;
   height: 450px;
@@ -259,7 +279,7 @@ body{
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  padding: 50px 20px 30px 20px;
+  padding: 80px 20px 30px 20px;
 }
 .cart-items-container h4{
   color: var(--orange);
@@ -434,3 +454,19 @@ body{
   display: none;
 }
 
+
+/* Final Message */
+.thanks-box{
+  margin-top: 100px;
+}
+.thanks-box h1{
+  padding-bottom: 40px;
+  color: var(--lightblue);
+}
+.thanks-box .name-b{
+  color: var(--orange);
+  font-weight: 800;
+}
+.sh-b{
+  width: 15%;
+}

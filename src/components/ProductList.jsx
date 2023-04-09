@@ -110,7 +110,9 @@ function ProductList(){
     return(
           <div>
             <div>
-              <h1 className='title'>My Bag Shop</h1>
+            <Link to={"/signup"} className="sign-up-bt sg-link" onClick={(e)=> {
+                e.stopPropagation()}}>Sign Up</Link>
+              <h1 className='title'>My Bag Shop</h1>        
               <div className='main-cart-box'>
                   <div className='cart-box' onMouseEnter={displayCartItems} >
                       <img 

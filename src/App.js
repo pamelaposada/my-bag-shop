@@ -4,6 +4,7 @@ import NotFound from './components/NotFound';
 
 import './App.css';
 import SubmitPurchase from './components/SubmitPurchase';
+import SignUpSession from './components/SignUpSession';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProductList/>}/>
-        <Route path="checkout" element={<SubmitPurchase/>}/>
+        <Route path="/checkout" element={<SubmitPurchase/>}/>
+        <Route path="/signup" element={<SignUpSession/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

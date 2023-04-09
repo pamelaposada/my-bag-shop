@@ -1,0 +1,31 @@
+
+.signup-box{
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.signup-box form{
+    padding: 0 30%;
+}
+.sgn-box{
+    border-radius: 15px;
+}
+::placeholder{
+    color: var(--orange);
+}
+.sgn-box .format-form label{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.sgn-box .format-form label input{
+    color: var(--blue);
+}
+.signup-box p{
+    color: #474b4a;
+    padding-top: 20px;
+}
+.signup-box span{
+    color: var(--orange);
+}
