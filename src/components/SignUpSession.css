@@ -6,6 +6,9 @@
     justify-content: center;
 
 }
+.signup-box h1{
+    padding-top: 50px;
+}
 .signup-box form{
     padding: 0 30%;
 }

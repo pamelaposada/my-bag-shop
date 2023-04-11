@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const signUpTemplateCopy = require('../models/SignUpModels')
-const bcrypt = require('bcrypt')
+
+const bcrypt = require('bcrypt');
+
 
 router.post('/signup', async (request, response) => {
 
@@ -22,5 +24,23 @@ router.post('/signup', async (request, response) => {
         response.json(error)
     })
 })
+
+router.post('/login', async (request, response) => {
+   
+    const {email,username, password} = request.body;
+    signUpTemplateCopy.findOne({email:email} || {username:username}, (error, user) => {
+        if(user){
+            if(password === user.password){
+                response.send({message:"login success", user:user})
+            }else{
+                response.send({message:"wrong credentials"})
+            }
+        }else{
+            response.send({message:"not register"})
+        }
+    })
+
+})
+
 
 module.exports = router
