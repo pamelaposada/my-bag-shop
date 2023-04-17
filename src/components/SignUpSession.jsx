@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import './SignUpSession.css'
+import Bar from './UI/BarMessage'
 
 function SignUpSession(props){
 
@@ -9,6 +10,7 @@ function SignUpSession(props){
     const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [formError, setFormError] = useState("");
 
     const changeFullName = (e) => {
         setFullName(e.target.value)
@@ -35,14 +37,29 @@ function SignUpSession(props){
             email: email,
             password: password,
         }
-        axios.post('http://localhost:4000/app/signup', registered)
-        .then(response => console.log(response.data))
 
-        window.location = '/'
+        // Validation
+        if(!registered.email.includes('@')){
+            setFormError("No valid email")
+            console.log("error: Email error")
+        }else if(registered.password.length < 6){
+            setFormError("Password length too short")
+            console.log("error: Password error")
+        }else{
+            axios.post('http://localhost:4000/app/signup', registered)
+            .then(response => response.data)
+
+            setFormError("Your account has been successfully created")
+
+            window.location = '/'
+        }
     }
+
+    const displayMessage = formError === "No valid email" || formError === "Password length too short" ? <Bar errorMsge={formError}/> : ""
 
     return(
         <div className="signup-box">
+            {displayMessage}
             <h1 className="title">Sign Up</h1>
             <form onSubmit={onSubmitSignupForm}>                
                 <div className="form-bg sgn-box">

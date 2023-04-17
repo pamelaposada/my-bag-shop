@@ -21,24 +21,32 @@ router.post('/signup', async (request, response) => {
         response.json(data)
     })
     .catch(error =>{
-        response.json(error)
+        response.status(500).send("Internal Server Error Ocurred")
     })
 })
 
 router.post('/login', async (request, response) => {
-   
-    const {email,username, password} = request.body;
-    signUpTemplateCopy.findOne({email:email} || {username:username}, (error, user) => {
-        if(user){
-            if(password === user.password){
-                response.send({message:"login success", user:user})
-            }else{
-                response.send({message:"wrong credentials"})
-            }
+    
+   try{
+    const user = await signUpTemplateCopy.findOne({username:request.body.username});
+    // console.log(user)
+
+    if(user){
+        const comparePasswd = await bcrypt.compare(request.body.password, user.password);
+        if(comparePasswd){
+            response.send({message:"login success", user:user})
         }else{
-            response.send({message:"not register"})
+            response.send({message:"Wrong username or password"})
         }
-    })
+    }else{
+        response.send({message:"Wrong username or password"})
+    }
+
+   }
+   catch(error){
+    console.log(error)
+    response.status(500).send("Internal Server Error Occurred")
+   }
 
 })
 

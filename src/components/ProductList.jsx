@@ -3,7 +3,7 @@ import ListOfProducts from '../data/ListOfProducts'
 import Product from './Product';
 import Cart from '../img/cart.png';
 import CartItem from './CartItem'
-import { Link, Params } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 
 function ProductList(){
@@ -13,8 +13,10 @@ function ProductList(){
   const [inputContent, setInputContent] = useState('');
   const [cartStyle, setCartStyle] = useState({display: 'none'});
   const [cart, setCart] = useState([]);
+  const [isLogged, setIsLogged] = useState(false)
 
 
+  // Sort functions
   const handleBtns = (e) => {
     if(e.target.value === "All products"){
       setCopydata(list)
@@ -99,22 +101,40 @@ function ProductList(){
 
   useEffect(()=> {
     console.log(cart)
-  },[cart])
+    console.log(isLogged)
+  },[cart, isLogged])
 
   const selectedItems = data.filter(item => cart.includes(item.name))
   const displayCheckOut = selectedItems.length !== 0
     ?<CheckOut cartLng={selectedItems}/> 
     : <h4>Your cart is empty</h4>
 
+  //Manage Login state
+  const handleLogin = (loginState) => {
+    if(loginState === "login success"){
+      setIsLogged(true)
+    }
+  }   
+
+
+  // Logout
+  const handleLogout = (e) => {
+    setIsLogged(false)
+    console.log(isLogged)
+  }
 
     return(
           <div>
             <div>
               <div className='session-container'>
                 <Link to={"/signup"} className="sign-up-bt sg-link" onClick={(e)=> {
-                e.stopPropagation()}}>Sign Up</Link>
+                e.stopPropagation()}} >Sign Up</Link>
                 <Link to={"/login"} className="sign-up-bt sg-link" onClick={(e)=> {
-                e.stopPropagation()}}>Login</Link>
+                e.stopPropagation()}} 
+                // data={{fromProductList:handleLogin}}
+                >Login</Link>
+                
+                <button className='sign-up-bt sg-link' onClick={handleLogout}>Logout</button>
               </div>
               
               <h1 className='title'>My Bag Shop</h1>        

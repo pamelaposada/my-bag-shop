@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { useLocation } from "react-router";
 
 import Bar from '../components/UI/BarMessage'
 
@@ -10,16 +11,19 @@ function Login(props){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState({})
+
+    // const location = useLocation()
+    // const fromProductList = location.state
 
 
-    const onchangeUsername = (e) => {
-        setEmail(e.target.value)
-   
-    }
 
     const onchangePassword = (e) => {
         setPassword(e.target.value)
+    }
+
+    const onUserName = (e) => {
+        setUsername(e.target.value)
     }
 
     const onSubmitLoginForm = (e) => {
@@ -31,19 +35,24 @@ function Login(props){
             email: email,
             password: password,
         }
-        // const usernameOrEmail = email.includes('@') ? "email" : "username"
-        // console.log(usernameOrEmail)
+        
 
         axios.post('http://localhost:4000/app/login', registered)
-        .then(response => setMessage(response.data.message))
+        .then(response => setMessage(response.data))
 
         
     }
+    if(message.message === "login success"){
+            // props.state.location.data.fromProductList(message.message)
+            window.location = '/'
+        }
 
-    const displayMessage = message === "wrong credentials" || message === "not register" ? <Bar errorMsge={message}/> : ""
+
+    const displayMessage = message === "Wrong username or password" ? <Bar errorMsge={message}/> : ""
 
     useEffect(()=> {
         console.log(message)
+        
       },[message])
 
     return(
@@ -54,12 +63,12 @@ function Login(props){
             <div className="form-bg sgn-box">
                 <div className="format-form">
                     <label>
-                        Your Email:
+                        Your Username:
                         <input 
                         type="text"  
                         placeholder="Your name here..."
-                        onChange={onchangeUsername}
-                        value={email}
+                        onChange={onUserName}
+                        value={username}
                         />
                     </label>
                 </div>
