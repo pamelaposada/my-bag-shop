@@ -11,7 +11,7 @@ function Login(props){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [message, setMessage] = useState({})
+    const [message, setMessage] = useState([])
 
     // const location = useLocation()
     // const fromProductList = location.state
@@ -38,13 +38,14 @@ function Login(props){
         
 
         axios.post('http://localhost:4000/app/login', registered)
-        .then(response => setMessage(response.data))
+        .then(response => setMessage(response.data.message))
 
         
     }
-    if(message.message === "login success"){
+    if(message === "login success"){
             // props.state.location.data.fromProductList(message.message)
-            window.location = '/'
+            // window.location = '/'
+            console.log(message)
         }
 
 

@@ -116,6 +116,10 @@ function ProductList(){
     }
   }   
 
+  const testing = (e)=> {
+    setIsLogged(true)
+    // console.log(isLogged)
+  }
 
   // Logout
   const handleLogout = (e) => {
@@ -123,20 +127,28 @@ function ProductList(){
     console.log(isLogged)
   }
 
+  // Login buttons
+  const displayLoginOptions = isLogged === false 
+  ? 
+    <div className='session-container'>
+      <Link to={"/signup"} className="sign-up-bt sg-link" onClick={(e)=> {
+      e.stopPropagation()}} >Sign Up</Link> 
+      <Link to={"/login"} className="sign-up-bt sg-link" onClick={testing} 
+      data={{fromProductList:handleLogin}}
+      >Login</Link>
+    </div>
+  :
+    <div className='session-container'>
+      <button className='sign-up-bt sg-link' onClick={handleLogout}>Logout</button>
+    </div>
+
+
     return(
           <div>
             <div>
-              <div className='session-container'>
-                <Link to={"/signup"} className="sign-up-bt sg-link" onClick={(e)=> {
-                e.stopPropagation()}} >Sign Up</Link>
-                <Link to={"/login"} className="sign-up-bt sg-link" onClick={(e)=> {
-                e.stopPropagation()}} 
-                // data={{fromProductList:handleLogin}}
-                >Login</Link>
-                
-                <button className='sign-up-bt sg-link' onClick={handleLogout}>Logout</button>
-              </div>
-              
+                {/* Login options based on isLogged state*/}
+                {displayLoginOptions}
+
               <h1 className='title'>My Bag Shop</h1>        
               <div className='main-cart-box'>
                   <div className='cart-box' onMouseEnter={displayCartItems} >

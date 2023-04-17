@@ -68,18 +68,6 @@ function SubmitPurchase(){
                             <div className="form-bg">
                                 <div className="format-form">
                                     <label>
-                                        Your Name:
-                                        <input type="text" value={formName} onChange={(e)=> setFormName(e.target.value)} />
-                                    </label>
-                                </div>
-                                <div className="format-form">
-                                    <label>
-                                        Your Surname:
-                                        <input type="text" value={surname} onChange={(e)=> setSurname(e.target.value)} />
-                                    </label>
-                                </div>
-                                <div className="format-form">
-                                    <label>
                                         Your Address:
                                         <input type="text" value={address} onChange={(e)=> setAddress(e.target.value)}/>
                                     </label>
