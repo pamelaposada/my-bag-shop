@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SignUpSession.css'
 import Bar from './UI/BarMessage'
@@ -11,6 +11,11 @@ function SignUpSession(props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formError, setFormError] = useState("");
+    const [ErrorUsername, setErrorUsername] = useState("")
+
+    useEffect(()=> {
+        console.log(formError)
+    },[formError])
 
     const changeFullName = (e) => {
         setFullName(e.target.value)
@@ -28,6 +33,7 @@ function SignUpSession(props){
         setPassword(e.target.value)
     }
 
+
     const onSubmitSignupForm = (e) => {
         e.preventDefault()
 
@@ -39,6 +45,7 @@ function SignUpSession(props){
         }
 
         // Validation
+
         if(!registered.email.includes('@')){
             setFormError("No valid email")
             console.log("error: Email error")
@@ -46,13 +53,15 @@ function SignUpSession(props){
             setFormError("Password length too short")
             console.log("error: Password error")
         }else{
-            axios.post('http://localhost:4000/app/signup', registered)
+            axios.post('/app/signup', registered)
             .then(response => response.data)
 
             setFormError("Your account has been successfully created")
 
-            window.location = '/'
+            // window.location = '/'
         }
+            
+        
     }
 
     const displayMessage = formError === "No valid email" || formError === "Password length too short" ? <Bar errorMsge={formError}/> : ""

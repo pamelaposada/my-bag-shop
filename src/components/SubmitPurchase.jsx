@@ -4,24 +4,50 @@ import CheckOutItem from "./CheckOutItem";
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import ThanksMessage from "./ThanksMessage";
+import axios from "axios";
 
 function SubmitPurchase(){
     
     const [finalMessage, setFinalMessage] = useState(false)
-    const [formName, setFormName] = useState("")
-    const [surname, setSurname] = useState("")
     const [address, setAddress] = useState("")
     const [phone, setPhone] = useState("")
+    const [region, setRegion] = useState("")
 
     const location = useLocation()
-    const fromCheckOut = location.state
+    const fromCheckOut = location.state //Cart data, userLogging state, and current user.
+    
+    // Redirect user to home if login state is false.
+    if(fromCheckOut === null){
+        window.location = '/'
+    }
 
+
+    const sendPurchaseArray = fromCheckOut.fromCheckOut.map(({name, price}) => ({name, price}) )
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        // send data here
-        console.log(formName,surname,address,phone)
-        setFinalMessage(true)
+
+        const registered = {
+            username : fromCheckOut.currentUser,
+            products : sendPurchaseArray,
+            total : totalFinal.toFixed(2),
+            address: address,
+            state: region,
+            phone: phone
+
+        }
+        if (registered.state === "none"){
+            console.log("Error: No State selected")
+        }else if(fromCheckOut === null){
+            console.log("Error: Invalid user")
+        }else{
+            axios.post("/app/checkout", registered)
+            .then(response => console.log(response))
+            setFinalMessage(true)
+        }
+        
     }
+
+   
 
     useEffect(()=> {
        
@@ -51,7 +77,7 @@ function SubmitPurchase(){
     return(
         <div>
             <div className={displayFinalMessage}>
-                <ThanksMessage name={formName}/>
+                <ThanksMessage name={fromCheckOut.currentUser}/>
             </div>
             
             <div className={`check-out-main-box ${hideForm}`}>
@@ -67,10 +93,26 @@ function SubmitPurchase(){
                             <h3 className="chk-title">Your Delivery details:</h3>
                             <div className="form-bg">
                                 <div className="format-form">
-                                    <label>
-                                        Your Address:
-                                        <input type="text" value={address} onChange={(e)=> setAddress(e.target.value)}/>
-                                    </label>
+                                    <div className="add_plus_state">
+                                        <label className="addr_inpt">
+                                            Your Address:
+                                            <input type="text" value={address} onChange={(e)=> setAddress(e.target.value)} />
+                                        </label>
+                                        
+                                        <label>Your State:
+                                        <select name="state" id="state" className="select-region" onChange={(e)=> setRegion(e.target.value)}>
+                                            <option value="none">Select...</option>
+                                            <option value="ACT">ACT</option>
+                                            <option value="NSW">NSW</option>
+                                            <option value="NT">NT</option>
+                                            <option value="QLD">QLD</option>
+                                            <option value="SA">SA</option>
+                                            <option value="VIC">VIC</option>
+                                            <option value="TAS">TAS</option>
+                                            <option value="WA">WA</option>
+                                        </select>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div className="format-form">
                                     <label>

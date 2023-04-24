@@ -5,6 +5,16 @@
 }
 
 .bar-msj-box p{
-    padding-top: 12px;
-    color: var(--text);
+    /* padding-top: 12px; */
+    color: #fff;
+}
+.success{
+    width: 100%;
+    background: var(--green);
+    height: 40px;
+    
+}
+.success p{
+    padding-top: 8px;
+    font-size: 0.9rem;
 }

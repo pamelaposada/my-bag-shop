@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+
 
 import Bar from '../components/UI/BarMessage'
 
@@ -11,11 +11,7 @@ function Login(props){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [message, setMessage] = useState([])
-
-    // const location = useLocation()
-    // const fromProductList = location.state
-
+    const [message, setMessage] = useState({message: 'no login'})
 
 
     const onchangePassword = (e) => {
@@ -37,23 +33,24 @@ function Login(props){
         }
         
 
-        axios.post('http://localhost:4000/app/login', registered)
-        .then(response => setMessage(response.data.message))
+        axios.post('/app/login', registered)
+        .then(response => setMessage(response.data))
 
         
     }
-    if(message === "login success"){
-            // props.state.location.data.fromProductList(message.message)
-            // window.location = '/'
+    if(message.message === "login success"){
+    
+            window.location = '/'
             console.log(message)
         }
+    
+        
 
-
-    const displayMessage = message === "Wrong username or password" ? <Bar errorMsge={message}/> : ""
+    const displayMessage = message.message === "Wrong username or password" ? <Bar errorMsge={message.message}/> : ""
 
     useEffect(()=> {
         console.log(message)
-        
+        console.log(message.message)
       },[message])
 
     return(

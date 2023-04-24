@@ -4,6 +4,9 @@ import Product from './Product';
 import Cart from '../img/cart.png';
 import CartItem from './CartItem'
 import { Link} from 'react-router-dom';
+import axios from "axios";
+import GreenBar from './UI/GreenBar';
+
 
 
 function ProductList(){
@@ -13,7 +16,10 @@ function ProductList(){
   const [inputContent, setInputContent] = useState('');
   const [cartStyle, setCartStyle] = useState({display: 'none'});
   const [cart, setCart] = useState([]);
-  const [isLogged, setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined)
+
+
 
 
   // Sort functions
@@ -102,29 +108,49 @@ function ProductList(){
   useEffect(()=> {
     console.log(cart)
     console.log(isLogged)
-  },[cart, isLogged])
+    console.log(currentUser)
+  },[cart, currentUser, isLogged])
 
   const selectedItems = data.filter(item => cart.includes(item.name))
   const displayCheckOut = selectedItems.length !== 0
-    ?<CheckOut cartLng={selectedItems}/> 
+    ?<CheckOut cartLng={selectedItems} userLoginState={isLogged} current={currentUser}/> 
     : <h4>Your cart is empty</h4>
 
   //Manage Login state
-  const handleLogin = (loginState) => {
-    if(loginState === "login success"){
-      setIsLogged(true)
-    }
-  }   
+  useEffect(() => {
+    console.log('Before calling /is_logged_in, isLogged=', isLogged);
+    axios.get('/app/is_logged_in').then(response => {
+      console.log('/is_logged_in response', response);
+      if (response.data.message === 'Yes') {
+        setIsLogged(true);
+      }
+    })
+  },[])
 
-  const testing = (e)=> {
-    setIsLogged(true)
-    // console.log(isLogged)
-  }
+  // Find active user 
+  useEffect(()=>{
+    axios.get('/app/user').then(response => {
+      if(response.data !== undefined){
+        setCurrentUser(response.data)
+      }
+    })
+  },[])
+
+  
+
 
   // Logout
   const handleLogout = (e) => {
-    setIsLogged(false)
-    console.log(isLogged)
+    e.preventDefault()
+    axios.delete('/app/is_logged_in').then(response => {
+      console.log(response.data);
+      if(response.data.message === "logged out succesfully"){
+        setIsLogged(false)
+      }
+    })
+    axios.get('/app/is_logged_in').then((response) => {
+      console.log(response.data)
+    })
   }
 
   // Login buttons
@@ -133,8 +159,7 @@ function ProductList(){
     <div className='session-container'>
       <Link to={"/signup"} className="sign-up-bt sg-link" onClick={(e)=> {
       e.stopPropagation()}} >Sign Up</Link> 
-      <Link to={"/login"} className="sign-up-bt sg-link" onClick={testing} 
-      data={{fromProductList:handleLogin}}
+      <Link to={"/login"} className="sign-up-bt sg-link"  
       >Login</Link>
     </div>
   :
@@ -142,9 +167,13 @@ function ProductList(){
       <button className='sign-up-bt sg-link' onClick={handleLogout}>Logout</button>
     </div>
 
+    // Hello message
+    const displayGreeting = isLogged === true ? <GreenBar successLogin={currentUser}/> : ""
+
 
     return(
           <div>
+            {displayGreeting}
             <div>
                 {/* Login options based on isLogged state*/}
                 {displayLoginOptions}
@@ -241,11 +270,15 @@ function CheckOut(props){
 
   // console.log(totalValues)
 
+  // console.log("user state", props.userLoginState)
+  console.log("current user: ",  props.current)
+
   return(
     <div>
       <h4>Total: <span className='total-value-color'>${(totalValues).toFixed(2)}</span></h4>
       <button className='cart-btn checkout-btn'>
-        <Link to={`/checkout`} className="ckeckout-link" state={{fromCheckOut: props.cartLng}}>
+        <Link to={props.userLoginState === false ? '/login' :'/checkout'} className="ckeckout-link" 
+        state={{fromCheckOut: props.cartLng, userState:props.userLoginState, currentUser:props.current}}>
         <p>{`Proceed to check out (${props.cartLng.length} items)`}</p>
         </Link>
       </button>
