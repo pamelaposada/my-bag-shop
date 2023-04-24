@@ -117,7 +117,7 @@ function SignUpSession(props){
                         </label>
                     </div>
                 </div>
-                <p>If you already have an account Login <Link to={'/login'} className='log-link'>here</Link></p>
+                <p className='text-msje'>If you already have an account Login <Link to={'/login'} className='log-link'>here</Link></p>
                 <input 
                 type="submit" 
                 value="Sign up"

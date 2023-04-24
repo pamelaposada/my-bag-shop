@@ -82,7 +82,7 @@ function Login(props){
                     </label>
                 </div>
             </div>
-            <p>If you don't have an account Signup <Link to={'/signup'} className='log-link'>here</Link></p>
+            <p>If you don't have an account Sign up <Link to={'/signup'} className='log-link'>here</Link></p>
             <input 
             type="submit" 
             value="Login"

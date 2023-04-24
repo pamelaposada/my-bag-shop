@@ -17,9 +17,9 @@ function SubmitPurchase(){
     const fromCheckOut = location.state //Cart data, userLogging state, and current user.
     
     // Redirect user to home if login state is false.
-    if(fromCheckOut === null){
-        window.location = '/'
-    }
+    // if(fromCheckOut === null){
+    //     window.location = '/'
+    // }
 
 
     const sendPurchaseArray = fromCheckOut.fromCheckOut.map(({name, price}) => ({name, price}) )
@@ -35,7 +35,7 @@ function SubmitPurchase(){
             phone: phone
 
         }
-        if (registered.state === "none"){
+        if (registered.state === "unselected"){
             console.log("Error: No State selected")
         }else if(fromCheckOut === null){
             console.log("Error: Invalid user")
@@ -101,7 +101,7 @@ function SubmitPurchase(){
                                         
                                         <label>Your State:
                                         <select name="state" id="state" className="select-region" onChange={(e)=> setRegion(e.target.value)}>
-                                            <option value="none">Select...</option>
+                                            <option value="unselected">Select...</option>
                                             <option value="ACT">ACT</option>
                                             <option value="NSW">NSW</option>
                                             <option value="NT">NT</option>

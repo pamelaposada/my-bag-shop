@@ -4,8 +4,8 @@
     background: var(--red);
 }
 
-.bar-msj-box p{
-    /* padding-top: 12px; */
+.bar-msj-box .error-msje{
+    padding-top: 12px;
     color: #fff;
 }
 .success{

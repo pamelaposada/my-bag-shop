@@ -15,7 +15,7 @@ app.use(
     expressSession({
       store: new FileStore({logFn: function(){}}),
       //  store, // Replace me with any of these: https://www.npmjs.com/package/express-session#compatible-session-stores..
-      secret: 'CHANGE_ME',
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
     })
@@ -24,4 +24,5 @@ app.use(express.json())
 // app.use(cors())
 app.use('/app', routeUrls)
 app.listen(4000, () => console.log("Server is listening on port 4000"));
+
 
