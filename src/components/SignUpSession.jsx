@@ -11,11 +11,11 @@ function SignUpSession(props){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formError, setFormError] = useState("");
-    const [ErrorUsername, setErrorUsername] = useState("")
+    // const [ErrorUsername, setErrorUsername] = useState("")
 
-    useEffect(()=> {
-        console.log(formError)
-    },[formError])
+    // useEffect(()=> {
+    //     console.log(formError)
+    // },[formError])
 
     const changeFullName = (e) => {
         setFullName(e.target.value)
@@ -48,17 +48,17 @@ function SignUpSession(props){
 
         if(!registered.email.includes('@')){
             setFormError("No valid email")
-            console.log("error: Email error")
+            // console.log("error: Email error")
         }else if(registered.password.length < 6){
             setFormError("Password length too short")
-            console.log("error: Password error")
+            // console.log("error: Password error")
         }else{
             axios.post('/app/signup', registered)
             .then(response => response.data)
 
             setFormError("Your account has been successfully created")
 
-            // window.location = '/'
+            window.location = '/'
         }
             
         

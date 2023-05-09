@@ -10,7 +10,7 @@ function Login(props){
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [email, setEmail] = useState("")
+    // const [email, setEmail] = useState("")
     const [message, setMessage] = useState({message: 'no login'})
 
 
@@ -28,7 +28,7 @@ function Login(props){
         const registered = {
        
             username: username,
-            email: email,
+            // email: email,
             password: password,
         }
         
@@ -41,17 +41,17 @@ function Login(props){
     if(message.message === "login success"){
     
             window.location = '/'
-            console.log(message)
+            // console.log(message)
         }
     
         
 
     const displayMessage = message.message === "Wrong username or password" ? <Bar errorMsge={message.message}/> : ""
 
-    useEffect(()=> {
-        console.log(message)
-        console.log(message.message)
-      },[message])
+    // useEffect(()=> {
+    //     console.log(message)
+    //     console.log(message.message)
+    //   },[message])
 
     return(
         <div className="signup-box">

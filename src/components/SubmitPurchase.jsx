@@ -2,9 +2,10 @@ import { useLocation } from "react-router";
 import Purchase from '../img/online-shopping.png'
 import CheckOutItem from "./CheckOutItem";
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef} from "react";
 import ThanksMessage from "./ThanksMessage";
 import axios from "axios";
+import BarMessage from "./UI/BarMessage";
 
 function SubmitPurchase(){
     
@@ -12,17 +13,25 @@ function SubmitPurchase(){
     const [address, setAddress] = useState("")
     const [phone, setPhone] = useState("")
     const [region, setRegion] = useState("")
+    const [error, setError] = useState("")
+
+    const countRenders = useRef(0)
+
 
     const location = useLocation()
     const fromCheckOut = location.state //Cart data, userLogging state, and current user.
+
+    // Display error message
+    const displayMessage = (region || address || phone === "") && finalMessage !== true && countRenders.current > 1 ? <BarMessage errorMsge={error}/> : ""
     
-    // Redirect user to home if login state is false.
-    // if(fromCheckOut === null){
-    //     window.location = '/'
-    // }
+    // Redirect user to home if login state is false and fromCheckOut is null.
+    if(fromCheckOut === null){
+        window.location = '/'
+    }
 
 
     const sendPurchaseArray = fromCheckOut.fromCheckOut.map(({name, price}) => ({name, price}) )
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
@@ -35,14 +44,28 @@ function SubmitPurchase(){
             phone: phone
 
         }
-        if (registered.state === "unselected"){
-            console.log("Error: No State selected")
-        }else if(fromCheckOut === null){
-            console.log("Error: Invalid user")
+        
+        // Validation
+        if(fromCheckOut === null){
+            window.location = '/'
+            // console.log("Error: Invalid user")
         }else{
-            axios.post("/app/checkout", registered)
-            .then(response => console.log(response))
-            setFinalMessage(true)
+            if(region === "" || region === "none"){
+                // console.log("Error: No region selected")
+                setError("No region selected")
+            }
+            else if(address === ""){
+                setError("You need to type your address")
+            }
+            else if(phone === ""){
+                setError("You need to type your phone number")
+            }
+            else{
+                axios.post("/app/checkout", registered)
+                .then(response => console.log(response))
+                setFinalMessage(true)
+            }
+            
         }
         
     }
@@ -50,8 +73,11 @@ function SubmitPurchase(){
    
 
     useEffect(()=> {
-       
-     console.log(finalMessage)
+
+        countRenders.current = countRenders.current + 1
+        // console.log(finalMessage)
+        // console.log(countRenders)
+  
       },[finalMessage]);
     
     const hideForm = finalMessage === true ? 'hide-form':'show-form'
@@ -76,6 +102,7 @@ function SubmitPurchase(){
 
     return(
         <div>
+            {displayMessage}
             <div className={displayFinalMessage}>
                 <ThanksMessage name={fromCheckOut.currentUser}/>
             </div>
@@ -101,7 +128,7 @@ function SubmitPurchase(){
                                         
                                         <label>Your State:
                                         <select name="state" id="state" className="select-region" onChange={(e)=> setRegion(e.target.value)}>
-                                            <option value="unselected">Select...</option>
+                                            <option value="none">Select...</option>
                                             <option value="ACT">ACT</option>
                                             <option value="NSW">NSW</option>
                                             <option value="NT">NT</option>

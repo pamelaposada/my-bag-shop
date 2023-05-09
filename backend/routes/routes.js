@@ -42,7 +42,7 @@ router.post('/login', async (request, response) => {
         const comparePasswd = await bcrypt.compare(request.body.password, user.password);
         if(comparePasswd){
             // it is the right user
-            console.log('user.username =', user.username);
+            // console.log('user.username =', user.username);
             request.session.username = user.username;
             response.send({message:"login success", user:user})
         }else{
@@ -54,7 +54,7 @@ router.post('/login', async (request, response) => {
 
    }
    catch(error){
-    console.log(error)
+    // console.log(error)
     response.status(500).send("Internal Server Error Occurred")
    }
 
@@ -62,7 +62,7 @@ router.post('/login', async (request, response) => {
 
 router.get('/is_logged_in', async (request, response) => {
     let isLoggedIn = false;
-    console.log('/is_loggged_in, request.session.username=',request.session.username);
+    // console.log('/is_loggged_in, request.session.username=',request.session.username);
     if (request.session.username) {
         isLoggedIn = true;
     }

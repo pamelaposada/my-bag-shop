@@ -105,11 +105,11 @@ function ProductList(){
     setCart(newCart)
   }
 
-  useEffect(()=> {
-    console.log(cart)
-    console.log(isLogged)
-    console.log(currentUser)
-  },[cart, currentUser, isLogged])
+  // useEffect(()=> {
+  //   console.log(cart)
+  //   console.log(isLogged)
+  //   console.log(currentUser)
+  // },[cart, currentUser, isLogged])
 
   const selectedItems = data.filter(item => cart.includes(item.name))
   const displayCheckOut = selectedItems.length !== 0
@@ -118,9 +118,9 @@ function ProductList(){
 
   //Manage Login state
   useEffect(() => {
-    console.log('Before calling /is_logged_in, isLogged=', isLogged);
+    // console.log('Before calling /is_logged_in, isLogged=', isLogged);
     axios.get('/app/is_logged_in').then(response => {
-      console.log('/is_logged_in response', response);
+      // console.log('/is_logged_in response', response);
       if (response.data.message === 'Yes') {
         setIsLogged(true);
       }
@@ -143,7 +143,7 @@ function ProductList(){
   const handleLogout = (e) => {
     e.preventDefault()
     axios.delete('/app/is_logged_in').then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       if(response.data.message === "logged out succesfully"){
         setIsLogged(false)
       }
@@ -271,7 +271,7 @@ function CheckOut(props){
   // console.log(totalValues)
 
   // console.log("user state", props.userLoginState)
-  console.log("current user: ",  props.current)
+  // console.log("current user: ",  props.current)
 
   return(
     <div>

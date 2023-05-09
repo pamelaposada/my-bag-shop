@@ -2,8 +2,8 @@ import Remove from '../img/remove.png'
 
 function CartItem(props){
     
-    console.log(props)
-    console.log(props.passSelected)
+    // console.log(props)
+    // console.log(props.passSelected)
 
     return(
         <div className="item-cart">
