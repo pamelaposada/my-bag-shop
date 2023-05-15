@@ -4,6 +4,8 @@ import axios from 'axios';
 import './SignUpSession.css'
 import Bar from './UI/BarMessage'
 
+axios.defaults.withCredentials = true;
+
 function SignUpSession(props){
 
     const [fullName, setFullName] = useState("");
@@ -53,7 +55,7 @@ function SignUpSession(props){
             setFormError("Password length too short")
             // console.log("error: Password error")
         }else{
-            axios.post('/app/signup', registered)
+            axios.post(`http://localhost:4000/app/signup`, registered)
             .then(response => response.data)
 
             setFormError("Your account has been successfully created")

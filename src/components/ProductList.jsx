@@ -7,7 +7,7 @@ import { Link} from 'react-router-dom';
 import axios from "axios";
 import GreenBar from './UI/GreenBar';
 
-
+axios.defaults.withCredentials = true;
 
 function ProductList(){
   const list= ListOfProducts
@@ -119,7 +119,7 @@ function ProductList(){
   //Manage Login state
   useEffect(() => {
     // console.log('Before calling /is_logged_in, isLogged=', isLogged);
-    axios.get('/app/is_logged_in').then(response => {
+    axios.get(`http://localhost:4000/app/is_logged_in`).then(response => {
       // console.log('/is_logged_in response', response);
       if (response.data.message === 'Yes') {
         setIsLogged(true);
@@ -129,7 +129,7 @@ function ProductList(){
 
   // Find active user 
   useEffect(()=>{
-    axios.get('/app/user').then(response => {
+    axios.get(`http://localhost:4000/app/user`).then(response => {
       if(response.data !== undefined){
         setCurrentUser(response.data)
       }
@@ -142,15 +142,16 @@ function ProductList(){
   // Logout
   const handleLogout = (e) => {
     e.preventDefault()
-    axios.delete('/app/is_logged_in').then(response => {
+    axios.delete(`http://localhost:4000/app/is_logged_in`).then(response => {
       // console.log(response.data);
       if(response.data.message === "logged out succesfully"){
         setIsLogged(false)
       }
     })
-    axios.get('/app/is_logged_in').then((response) => {
-      console.log(response.data)
-    })
+    axios.get(`http://localhost:4000/app/is_logged_in`)
+    // .then((response) => {
+    //   console.log(response.data)
+    // })
   }
 
   // Login buttons

@@ -3,8 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 
-
 import Bar from '../components/UI/BarMessage'
+
+axios.defaults.withCredentials = true;
 
 function Login(props){
 
@@ -33,7 +34,7 @@ function Login(props){
         }
         
 
-        axios.post('/app/login', registered)
+        axios.post(`http://localhost:4000/app/login`, registered)
         .then(response => setMessage(response.data))
 
         
@@ -52,6 +53,8 @@ function Login(props){
     //     console.log(message)
     //     console.log(message.message)
     //   },[message])
+
+    
 
     return(
         <div className="signup-box">

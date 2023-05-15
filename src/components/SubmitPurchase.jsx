@@ -7,6 +7,8 @@ import ThanksMessage from "./ThanksMessage";
 import axios from "axios";
 import BarMessage from "./UI/BarMessage";
 
+axios.defaults.withCredentials = true;
+
 function SubmitPurchase(){
     
     const [finalMessage, setFinalMessage] = useState(false)
@@ -61,8 +63,8 @@ function SubmitPurchase(){
                 setError("You need to type your phone number")
             }
             else{
-                axios.post("/app/checkout", registered)
-                .then(response => console.log(response))
+                axios.post(`http://localhost:4000/app/checkout`, registered)
+                // .then(response => console.log(response))
                 setFinalMessage(true)
             }
             
