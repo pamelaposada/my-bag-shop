@@ -249,7 +249,7 @@ Users can:
    
    change cors settings to server ip
    
-   create .env file
+   create backend .env file with Mongodb credentials
 
 10. Production
 
