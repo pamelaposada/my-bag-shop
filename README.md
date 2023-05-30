@@ -232,16 +232,23 @@ Users can:
 8. Front-end
 
    cd /my-bag-shop/
+   
    npm i
+   
    change local host for server ip
+   
    npm run build
+   
    copy build folder in /client/deploy/
 
 9. Backend
 
    delete node_modules and package-lock.json
+   
    npm i
+   
    change cors settings to server ip
+   
    create .env file
 
 10. Production
