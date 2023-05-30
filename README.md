@@ -129,14 +129,14 @@ Users can:
         include    /etc/nginx/fastcgi.conf;
         default_type  application/octet-stream;
 
-        log_format  kv     'site="$server_name" server="$host" dest_port="$server_p>
-                        'time_local="$time_local" protocol="$server_protocol" st>
-                        'bytes_out="$bytes_sent" bytes_in="$upstream_bytes_recei>
-                        'http_referer="$http_referer" http_user_agent="$http_use>
-                        'nginx_version="$nginx_version" http_x_forwarded_for="$h>
-                        'http_x_header="$http_x_header" uri_query="$query_string>
-                        'http_method="$request_method" response_time="$upstream_>
-                        'cookie="$http_cookie" request_time="$request_time" cate>
+        log_format  kv      'site="$server_name" server="$host" dest_port="$server_port" dest_ip="$server_addr" '
+                            'time_local="$time_local" protocol="$server_protocol" status="$status" '
+                            'bytes_out="$bytes_sent" bytes_in="$upstream_bytes_received" '
+                            'http_referer="$http_referer" http_user_agent="$http_user_agent" '
+                            'nginx_version="$nginx_version" http_x_forwarded_for="$http_x_forwarded_for" '
+                            'http_x_header="$http_x_header" uri_query="$query_string" uri_path="$uri" '
+                            'http_method="$request_method" response_time="$upstream_response_time" '
+                            'cookie="$http_cookie" request_time="$request_time" category="$sent_http_content_type" https="$https"';
 
         log_format post_logs ' $request_body ';
 
