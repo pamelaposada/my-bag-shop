@@ -18,3 +18,16 @@
     padding-top: 8px;
     font-size: 0.9rem;
 }
+.acc-success{
+    background: #aed498;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+}
+.scc-link{
+    padding: 18px 0 0 6px;
+}
+.success-empty{
+    display: none;
+}
+

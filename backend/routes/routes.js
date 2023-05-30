@@ -22,7 +22,6 @@ router.post('/signup', async (request, response) => {
 
     signedUpUser.save()
     .then(data =>{
-   
         response.json(data)
     })
     .catch(error =>{
@@ -73,7 +72,7 @@ router.get('/is_logged_in', async (request, response) => {
 router.delete('/is_logged_in', async (request, response) => {
    
     request.session.destroy()
-    response.json({message: "logged out succesfully"})
+    response.json({message: `logged out succesfully`})
 })
 
 router.get('/user', async (request, response) => {

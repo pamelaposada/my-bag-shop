@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SignUpSession.css'
 import Bar from './UI/BarMessage'
+import AccountSuccess from './UI/AccoutSuccess'
 
 axios.defaults.withCredentials = true;
 
@@ -15,9 +16,9 @@ function SignUpSession(props){
     const [formError, setFormError] = useState("");
     // const [ErrorUsername, setErrorUsername] = useState("")
 
-    // useEffect(()=> {
-    //     console.log(formError)
-    // },[formError])
+    useEffect(()=> {
+        console.log(formError)
+    },[formError])
 
     const changeFullName = (e) => {
         setFullName(e.target.value)
@@ -60,7 +61,7 @@ function SignUpSession(props){
 
             setFormError("Your account has been successfully created")
 
-            window.location = '/'
+            // window.location = '/'
         }
             
         
@@ -68,8 +69,11 @@ function SignUpSession(props){
 
     const displayMessage = formError === "No valid email" || formError === "Password length too short" ? <Bar errorMsge={formError}/> : ""
 
+    const displaySuccess = formError=== "Your account has been successfully created" ? 'acc-success': 'success-empty'
+
     return(
         <div className="signup-box">
+            <AccountSuccess succMsg={formError} succlass={displaySuccess}/>
             {displayMessage}
             <h1 className="title">Sign Up</h1>
             <form onSubmit={onSubmitSignupForm}>                
