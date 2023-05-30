@@ -6,7 +6,7 @@ Small shopping cart project about a handbag's shop business. The project has bee
 
 ## Project Features
 
-Users ca:
+Users can:
 
 <ul>
     <li>Select and unselect products</li>
@@ -83,33 +83,33 @@ Users ca:
 3. sudo apt-get update
 4. Install Node from NVM
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-. ~/.nvm/nvm.sh
+   . ~/.nvm/nvm.sh
 
-nvm install --lts
+   nvm install --lts
 
-node --version
+   node --version
 
 5. Install Nginx
 
-sudo apt install nginx
+   sudo apt install nginx
 
 6. Configure Nginx
 
-mkdir /home/ubuntu/client/deploy/
+   mkdir /home/ubuntu/client/deploy/
 
-mkdir /home/ubuntu/client/server_logs/
+   mkdir /home/ubuntu/client/server_logs/
 
-cd /home/ubuntu/client/server_logs/
+   cd /home/ubuntu/client/server_logs/
 
-touch host.access.log
+   touch host.access.log
 
-cd /etc/nginx/conf.d/
+   cd /etc/nginx/conf.d/
 
-touch default.conf
+   touch default.conf
 
-sudo nano /etc/nginx.conf
+   sudo nano /etc/nginx.conf
 
 ---
 
@@ -165,7 +165,7 @@ http {
 
 ---
 
-sudo nano /etc/nginx/conf.d/default.conf
+    sudo nano /etc/nginx/conf.d/default.conf
 
 ---
 
@@ -195,23 +195,23 @@ access_log /home/ubuntu/client/server_logs/host.access.log kv;
         add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
     }
 
-location /app/ {
-proxy_pass http://127.0.0.1:4000/;
-access_log /home/ubuntu/client/server_logs/post.access.log kv;
-add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
-add_header X-Frame-Options SAMEORIGIN;
-add_header X-Content-Type-Options nosniff;
-add_header X-XSS-Protection "1; mode=block";
-add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
-proxy_http_version 1.1;
-proxy_set_header Connection '';
-proxy_set_header Host $host;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Host $http_host;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-NginX-Proxy true;
-proxy_redirect off;
-}
+    location /app/ {
+        proxy_pass http://127.0.0.1:4000/;
+        access_log /home/ubuntu/client/server_logs/post.access.log kv;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
+        add_header X-Frame-Options SAMEORIGIN;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
+        proxy_http_version 1.1;
+        proxy_set_header Connection '';
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_redirect off;
+    }
 
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
@@ -231,25 +231,25 @@ proxy_redirect off;
 7. Clone repository in server
 8. Front-end
 
-cd /my-bag-shop/
-npm i
-change local host for server ip
-npm run build
-copy build folder in /client/deploy/
+   cd /my-bag-shop/
+   npm i
+   change local host for server ip
+   npm run build
+   copy build folder in /client/deploy/
 
 9. Backend
 
-delete node_modules and package-lock.json
-npm i
-change cors settings to server ip
-create .env file
+   delete node_modules and package-lock.json
+   npm i
+   change cors settings to server ip
+   create .env file
 
 10. Production
 
-Install pm2 globally:
+    Install pm2 globally:
 
-npm i pm2 -g
+    npm i pm2 -g
 
-Go to backend folder:
+    Go to backend folder:
 
-pm2 start npm --name "api" -- start
+    pm2 start npm --name "api" -- start
