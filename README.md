@@ -239,7 +239,7 @@ Users can:
    
    npm run build
    
-   copy build folder in /client/deploy/
+   copy build folder files into /client/deploy/
 
 9. Backend
 
