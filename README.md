@@ -1,70 +1,255 @@
-# Getting Started with Create React App
+# My Bag Shop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+Small shopping cart project about a handbag's shop business. The project has been created using MERN stack (MongoDB, Express, React, and Node) and deployed on an EC2 by using Nginx server.
 
-In the project directory, you can run:
+## Project Features
 
-### `npm start`
+Users ca:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<ul>
+    <li>Select and unselect products</li>
+    <li>Diplay the total amount of their purchase</li>
+    <li>Delete products from the cart</li>
+    <li>Create an account and Login</li>
+    <li>Search products</li>
+    <li>Sort products by price</li>
+    <li>Filter products by category</li>
+</ul>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Programming Languages
 
-### `npm test`
+<ul>
+    <li>JavaScript</li>
+    <li>CSS</li>
+    <li>HTML</li>
+</ul>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Frameworks
 
-### `npm run build`
+<ul>
+    <li>ReactJS</li>
+</ul>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Libraries
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Front-end
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<ul>
+    <li>Create react app</li>
+    <li>Axios</li>
+    <li>Express session</li>
+    <li>React router</li>
+    <li>Session file store</li>
+</ul>
 
-### `npm run eject`
+### Back-end
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<ul>
+    <li>Express</li>
+    <li>Cors</li>
+    <li>Express session</li>
+    <li>Mongoose</li>
+</ul>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Testing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<ul>
+    <li>Postman</li>
+    <li>MorganBody</li>
+    <li>test.http</li>
+</ul>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Deployment
 
-## Learn More
+<ul>
+    <li>EC2</li>
+    <li>Ubuntu</li>
+    <li>Nginx</li>
+</ul>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Deployment steps
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Deploy an AWS EC2 Ubuntu Server 22.04 LTS
+2. Security group configuration
+<ul>
+    <li>Allow ssh on port 22</li>
+    <li>Allow http on port 80</li>
+    <li>Allow Node server on port 4000</li>
+    <li>Allow Mongodb on port 27017</li>
+</ul>
 
-### Code Splitting
+3. sudo apt-get update
+4. Install Node from NVM
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-### Analyzing the Bundle Size
+. ~/.nvm/nvm.sh
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+nvm install --lts
 
-### Making a Progressive Web App
+node --version
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+5. Install Nginx
 
-### Advanced Configuration
+sudo apt install nginx
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+6. Configure Nginx
 
-### Deployment
+mkdir /home/ubuntu/client/deploy/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+mkdir /home/ubuntu/client/server_logs/
 
-### `npm run build` fails to minify
+cd /home/ubuntu/client/server_logs/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+touch host.access.log
+
+cd /etc/nginx/conf.d/
+
+touch default.conf
+
+sudo nano /etc/nginx.conf
+
+---
+
+user ubuntu;
+worker_processes 1;
+
+error_log /var/log/nginx/error.log warn;
+pid /var/run/nginx.pid;
+
+events {
+worker_connections 1024;
+}
+
+http {
+
+    include       /etc/nginx/mime.types;
+    include    /etc/nginx/fastcgi.conf;
+    default_type  application/octet-stream;
+
+    log_format  kv     'site="$server_name" server="$host" dest_port="$server_p>
+                       'time_local="$time_local" protocol="$server_protocol" st>
+                       'bytes_out="$bytes_sent" bytes_in="$upstream_bytes_recei>
+                       'http_referer="$http_referer" http_user_agent="$http_use>
+                       'nginx_version="$nginx_version" http_x_forwarded_for="$h>
+                       'http_x_header="$http_x_header" uri_query="$query_string>
+                       'http_method="$request_method" response_time="$upstream_>
+                       'cookie="$http_cookie" request_time="$request_time" cate>
+
+    log_format post_logs ' $request_body ';
+
+
+    access_log  /var/log/nginx/access.log  kv;
+
+     sendfile        on;
+     tcp_nopush     on;
+     tcp_nodelay         on;
+
+    client_body_buffer_size 100k;
+    client_header_buffer_size 1k;
+    client_max_body_size 100k;
+    large_client_header_buffers 2 1k;
+    client_body_timeout 10;
+    client_header_timeout 10;
+    keepalive_timeout 5 5;
+    send_timeout 10;
+    server_tokens off;
+    #gzip  on; on;
+
+
+    include /etc/nginx/conf.d/*.conf;
+
+}
+
+---
+
+sudo nano /etc/nginx/conf.d/default.conf
+
+---
+
+server {
+#listen 80;
+listen 80 default_server;
+listen [::]:80 default_server;
+server_name 3.104.94.141;
+index index.html;
+access_log /home/ubuntu/client/server_logs/host.access.log kv;
+
+    location / {
+         try_files $uri $uri/ =404;
+     }
+
+
+    location / {
+        access_log /home/ubuntu/client/server_logs/host.access.log kv;
+        root   /home/ubuntu/client/deploy;
+        index  index.html index.htm;
+        try_files $uri /index.html;
+        default_type text/html;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header X-Frame-Options SAMEORIGIN;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
+    }
+
+location /app/ {
+proxy_pass http://127.0.0.1:4000/;
+access_log /home/ubuntu/client/server_logs/post.access.log kv;
+add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
+add_header X-Frame-Options SAMEORIGIN;
+add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
+proxy_http_version 1.1;
+proxy_set_header Connection '';
+proxy_set_header Host $host;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header Host $http_host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-NginX-Proxy true;
+proxy_redirect off;
+}
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+        server_tokens off;
+
+    location ~ /\.ht {
+        deny  all;
+    }
+
+}
+
+---
+
+7. Clone repository in server
+8. Front-end
+
+cd /my-bag-shop/
+npm i
+change local host for server ip
+npm run build
+copy build folder in /client/deploy/
+
+9. Backend
+
+delete node_modules and package-lock.json
+npm i
+change cors settings to server ip
+create .env file
+
+10. Production
+
+Install pm2 globally:
+
+npm i pm2 -g
+
+Go to backend folder:
+
+pm2 start npm --name "api" -- start
