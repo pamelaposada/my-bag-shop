@@ -103,7 +103,7 @@ Users can:
 
    cd /home/ubuntu/client/server_logs/
 
-   touch host.access.log
+   touch host.access.log api.access.log
 
    cd /etc/nginx/conf.d/
 
