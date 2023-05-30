@@ -51,6 +51,7 @@ Users can:
     <li>Cors</li>
     <li>Express session</li>
     <li>Mongoose</li>
+    <li>Bcrypt</li>
 </ul>
 
 ### Testing
