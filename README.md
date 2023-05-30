@@ -109,7 +109,7 @@ Users can:
 
    touch default.conf
 
-   sudo nano /etc/nginx.conf
+   sudo nano /etc/nginx/nginx.conf
 
 ---
 
