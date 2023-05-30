@@ -113,55 +113,55 @@ Users can:
 
 ---
 
-user ubuntu;
-worker_processes 1;
+    user ubuntu;
+    worker_processes 1;
 
-error_log /var/log/nginx/error.log warn;
-pid /var/run/nginx.pid;
+    error_log /var/log/nginx/error.log warn;
+    pid /var/run/nginx.pid;
 
-events {
-worker_connections 1024;
-}
+    events {
+    worker_connections 1024;
+    }
 
-http {
+    http {
 
-    include       /etc/nginx/mime.types;
-    include    /etc/nginx/fastcgi.conf;
-    default_type  application/octet-stream;
+        include       /etc/nginx/mime.types;
+        include    /etc/nginx/fastcgi.conf;
+        default_type  application/octet-stream;
 
-    log_format  kv     'site="$server_name" server="$host" dest_port="$server_p>
-                       'time_local="$time_local" protocol="$server_protocol" st>
-                       'bytes_out="$bytes_sent" bytes_in="$upstream_bytes_recei>
-                       'http_referer="$http_referer" http_user_agent="$http_use>
-                       'nginx_version="$nginx_version" http_x_forwarded_for="$h>
-                       'http_x_header="$http_x_header" uri_query="$query_string>
-                       'http_method="$request_method" response_time="$upstream_>
-                       'cookie="$http_cookie" request_time="$request_time" cate>
+        log_format  kv     'site="$server_name" server="$host" dest_port="$server_p>
+                        'time_local="$time_local" protocol="$server_protocol" st>
+                        'bytes_out="$bytes_sent" bytes_in="$upstream_bytes_recei>
+                        'http_referer="$http_referer" http_user_agent="$http_use>
+                        'nginx_version="$nginx_version" http_x_forwarded_for="$h>
+                        'http_x_header="$http_x_header" uri_query="$query_string>
+                        'http_method="$request_method" response_time="$upstream_>
+                        'cookie="$http_cookie" request_time="$request_time" cate>
 
-    log_format post_logs ' $request_body ';
-
-
-    access_log  /var/log/nginx/access.log  kv;
-
-     sendfile        on;
-     tcp_nopush     on;
-     tcp_nodelay         on;
-
-    client_body_buffer_size 100k;
-    client_header_buffer_size 1k;
-    client_max_body_size 100k;
-    large_client_header_buffers 2 1k;
-    client_body_timeout 10;
-    client_header_timeout 10;
-    keepalive_timeout 5 5;
-    send_timeout 10;
-    server_tokens off;
-    #gzip  on; on;
+        log_format post_logs ' $request_body ';
 
 
-    include /etc/nginx/conf.d/*.conf;
+        access_log  /var/log/nginx/access.log  kv;
 
-}
+        sendfile        on;
+        tcp_nopush     on;
+        tcp_nodelay         on;
+
+        client_body_buffer_size 100k;
+        client_header_buffer_size 1k;
+        client_max_body_size 100k;
+        large_client_header_buffers 2 1k;
+        client_body_timeout 10;
+        client_header_timeout 10;
+        keepalive_timeout 5 5;
+        send_timeout 10;
+        server_tokens off;
+        #gzip  on; on;
+
+
+        include /etc/nginx/conf.d/*.conf;
+
+    }
 
 ---
 
@@ -169,62 +169,62 @@ http {
 
 ---
 
-server {
-#listen 80;
-listen 80 default_server;
-listen [::]:80 default_server;
-server_name 3.104.94.141;
-index index.html;
-access_log /home/ubuntu/client/server_logs/host.access.log kv;
+    server {
+    #listen 80;
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name 3.104.94.141;
+    index index.html;
+    access_log /home/ubuntu/client/server_logs/host.access.log kv;
 
-    location / {
-         try_files $uri $uri/ =404;
-     }
+        location / {
+            try_files $uri $uri/ =404;
+        }
 
 
-    location / {
-        access_log /home/ubuntu/client/server_logs/host.access.log kv;
-        root   /home/ubuntu/client/deploy;
-        index  index.html index.htm;
-        try_files $uri /index.html;
-        default_type text/html;
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-        add_header X-Frame-Options SAMEORIGIN;
-        add_header X-Content-Type-Options nosniff;
-        add_header X-XSS-Protection "1; mode=block";
-        add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
+        location / {
+            access_log /home/ubuntu/client/server_logs/host.access.log kv;
+            root   /home/ubuntu/client/deploy;
+            index  index.html index.htm;
+            try_files $uri /index.html;
+            default_type text/html;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            add_header X-Frame-Options SAMEORIGIN;
+            add_header X-Content-Type-Options nosniff;
+            add_header X-XSS-Protection "1; mode=block";
+            add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
+        }
+
+        location /app/ {
+            proxy_pass http://127.0.0.1:4000/;
+            access_log /home/ubuntu/client/server_logs/post.access.log kv;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
+            add_header X-Frame-Options SAMEORIGIN;
+            add_header X-Content-Type-Options nosniff;
+            add_header X-XSS-Protection "1; mode=block";
+            add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
+            proxy_http_version 1.1;
+            proxy_set_header Connection '';
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-NginX-Proxy true;
+            proxy_redirect off;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+
+            server_tokens off;
+
+        location ~ /\.ht {
+            deny  all;
+        }
+
     }
-
-    location /app/ {
-        proxy_pass http://127.0.0.1:4000/;
-        access_log /home/ubuntu/client/server_logs/post.access.log kv;
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
-        add_header X-Frame-Options SAMEORIGIN;
-        add_header X-Content-Type-Options nosniff;
-        add_header X-XSS-Protection "1; mode=block";
-        add_header Strict-Transport-Security "max-age=31536000; includeSubdoma>
-        proxy_http_version 1.1;
-        proxy_set_header Connection '';
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_redirect off;
-    }
-
-    error_page   500 502 503 504  /50x.html;
-    location = /50x.html {
-        root   /usr/share/nginx/html;
-    }
-
-        server_tokens off;
-
-    location ~ /\.ht {
-        deny  all;
-    }
-
-}
 
 ---
 
