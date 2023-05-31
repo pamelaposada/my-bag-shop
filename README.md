@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Small shopping cart project about a fictitious business selling handbags online. The project has been created using MERN stack (MongoDB, Express, React, and Node) and deployed on an EC2 by using Nginx server.
+Small shopping cart project about a fictitious business selling handbags online. The project has been created using MERN stack (MongoDB, Express, React, and Node) and deployed on an EC2 that uses Nginx server.
 
 ## Project Features
 
