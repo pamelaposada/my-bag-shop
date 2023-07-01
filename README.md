@@ -170,63 +170,63 @@ Users can:
 
 ---
 
-server {
-    #listen       80;
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    server_name  3.104.94.141;
-#    root   /home/ubuntu/client/deploy;
-    index  index.html;
-    access_log /home/ubuntu/client/server_logs/host.access.log kv;
-
-#    location / {
-#         try_files $uri $uri/ =404;
-#     }
-
-
-    location / {
-	access_log /home/ubuntu/client/server_logs/host.access.log kv;
-        root   /home/ubuntu/client/deploy;
-        index  index.html index.htm;
-	try_files $uri /index.html;
-#	default_type text/html;
-#	add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-#        add_header X-Frame-Options SAMEORIGIN;
-#        add_header X-Content-Type-Options nosniff;
-#        add_header X-XSS-Protection "1; mode=block";
-#        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
-    }
-
-    location /app/ {
-	proxy_pass http://127.0.0.1:4000/;
-	access_log /home/ubuntu/client/server_logs/post.access.log kv;
-#	add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
-#        add_header X-Frame-Options SAMEORIGIN;
-#        add_header X-Content-Type-Options nosniff;
-#        add_header X-XSS-Protection "1; mode=block";
-#        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
-	proxy_http_version 1.1;
-         proxy_set_header Connection '';
-         proxy_set_header Host $host;
-	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    	 proxy_set_header Host $http_host;
-	proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-NginX-Proxy true;
-	proxy_redirect off;
-    }
-
-    error_page   500 502 503 504  /50x.html;
-    location = /50x.html {
-        root   /usr/share/nginx/html;
-    }
-
-    server_tokens off;
-
-    location ~ /\.ht {
-        deny  all;
-    }
-
-}
+	server {
+	    #listen       80;
+	    listen 80 default_server;
+	    listen [::]:80 default_server;
+	    server_name  3.104.94.141;
+	#    root   /home/ubuntu/client/deploy;
+	    index  index.html;
+	    access_log /home/ubuntu/client/server_logs/host.access.log kv;
+	
+	#    location / {
+	#         try_files $uri $uri/ =404;
+	#     }
+	
+	
+	    location / {
+		access_log /home/ubuntu/client/server_logs/host.access.log kv;
+	        root   /home/ubuntu/client/deploy;
+	        index  index.html index.htm;
+		try_files $uri /index.html;
+	#	default_type text/html;
+	#	add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+	#        add_header X-Frame-Options SAMEORIGIN;
+	#        add_header X-Content-Type-Options nosniff;
+	#        add_header X-XSS-Protection "1; mode=block";
+	#        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+	    }
+	
+	    location /app/ {
+		proxy_pass http://127.0.0.1:4000/;
+		access_log /home/ubuntu/client/server_logs/post.access.log kv;
+	#	add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE';
+	#        add_header X-Frame-Options SAMEORIGIN;
+	#        add_header X-Content-Type-Options nosniff;
+	#        add_header X-XSS-Protection "1; mode=block";
+	#        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+		proxy_http_version 1.1;
+	         proxy_set_header Connection '';
+	         proxy_set_header Host $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	    	 proxy_set_header Host $http_host;
+		proxy_set_header X-Real-IP $remote_addr;
+	        proxy_set_header X-NginX-Proxy true;
+		proxy_redirect off;
+	    }
+	
+	    error_page   500 502 503 504  /50x.html;
+	    location = /50x.html {
+	        root   /usr/share/nginx/html;
+	    }
+	
+	    server_tokens off;
+	
+	    location ~ /\.ht {
+	        deny  all;
+	    }
+	
+	}
 
 ---
 
